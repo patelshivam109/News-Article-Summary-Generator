@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500">
+  <rect width="800" height="500" fill="#f0f4ff"/>
+  <g transform="translate(100,100)">
+    <rect x="0" y="0" width="600" height="300" rx="20" fill="#ffffff" stroke="#dce3ff" stroke-width="3"/>
+    <rect x="30" y="40" width="540" height="40" rx="8" fill="#0d6efd" opacity="0.9"/>
+    <text x="50" y="67" font-family="Poppins, sans-serif" font-size="18" fill="white" font-weight="600">Latest News Summaries</text>
+    
+    <rect x="50" y="110" width="220" height="15" rx="3" fill="#cdd6f7"/>
+    <rect x="50" y="140" width="500" height="10" rx="3" fill="#e1e6fa"/>
+    <rect x="50" y="160" width="480" height="10" rx="3" fill="#e1e6fa"/>
+    <rect x="50" y="180" width="520" height="10" rx="3" fill="#e1e6fa"/>
+
+    <rect x="50" y="220" width="220" height="15" rx="3" fill="#cdd6f7"/>
+    <rect x="50" y="250" width="500" height="10" rx="3" fill="#e1e6fa"/>
+    <rect x="50" y="270" width="480" height="10" rx="3" fill="#e1e6fa"/>
+    <rect x="50" y="290" width="520" height="10" rx="3" fill="#e1e6fa"/>
+  </g>
+
+  <g transform="translate(650,380)">
+    <circle cx="0" cy="0" r="40" fill="#0d6efd"/>
+    <path d="M-10 -15 L15 0 L-10 15 Z" fill="white"/>
+  </g>
+
+  <text x="400" y="470" text-anchor="middle" font-family="Poppins, sans-serif" font-size="16" fill="#555">
+    AI-powered News Summarizer
+  </text>
+</svg>

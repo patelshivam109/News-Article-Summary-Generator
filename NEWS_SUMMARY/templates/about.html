@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About | News Summarizer</title>
+
+  <!-- Bootstrap & Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --primary: #0d6efd;
+      --text: #000;
+      --glass-bg: rgba(255,255,255,0.15);
+      --shadow: rgba(0,0,0,0.2);
+      --hover-scale: 1.05;
+    }
+
+    body[data-theme="dark"] {
+      --primary: #0d6efd;
+      --text: #fff;
+      --glass-bg: rgba(0,0,0,0.25);
+      background: #121212;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #f8f9fa;
+      color: var(--text);
+      transition: background 0.3s, color 0.3s;
+    }
+
+    /* Navbar */
+    .glass-nav {
+      background: var(--glass-bg);
+      -webkit-backdrop-filter: blur(10px);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 2px 20px var(--shadow);
+      position: sticky;
+      top: 0;
+      z-index: 1030;
+      transition: 0.3s;
+    }
+    .navbar-brand, .nav-link { 
+      color: var(--primary) !important; 
+      font-weight: 600; 
+      transition: 0.2s;
+    }
+    .nav-link:hover {
+      transform: scale(1.1) translateY(-2px);
+      text-shadow: 0 0 8px var(--primary);
+    }
+    .nav-slider .slider {
+      position: absolute;
+      bottom: 0;
+      height: 3px;
+      background: var(--primary);
+      border-radius: 2px;
+      transition: 0.3s;
+    }
+
+    /* Loader */
+    .loader-overlay {
+      position: fixed; inset:0;
+      background: rgba(0,0,0,0.15);
+      -webkit-backdrop-filter: blur(5px);
+      backdrop-filter: blur(5px);
+      display: flex; justify-content: center; align-items: center;
+      z-index: 9999;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.3s;
+    }
+    .loader-overlay.show { opacity:1; pointer-events: all; }
+    .loader-3d {
+      width: 60px; height: 60px;
+      border: 6px solid var(--primary);
+      border-top: 6px solid transparent;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+    @keyframes spin { 100% { transform: rotate(360deg); } }
+
+    /* About cards */
+    .tilt {
+      background: var(--glass-bg);
+      -webkit-backdrop-filter: blur(10px);
+      backdrop-filter: blur(10px);
+      border-radius: 1rem;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      transition: transform 0.2s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+    }
+    .tilt:hover {
+      transform: scale(var(--hover-scale)) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg));
+      box-shadow: 0 20px 40px var(--shadow);
+    }
+    .card-icon {
+      font-size: 3rem;
+      color: var(--primary);
+      transition: transform 0.3s, text-shadow 0.3s;
+    }
+    .tilt:hover .card-icon {
+      transform: scale(1.3) rotate(10deg);
+      text-shadow: 0 0 15px var(--primary);
+    }
+
+    /* Buttons */
+    .btn-3d {
+      border-radius: 0.5rem;
+      transition: transform 0.2s, box-shadow 0.3s;
+    }
+    .btn-3d:hover {
+      transform: scale(1.05);
+      box-shadow: 0 8px 20px var(--shadow);
+    }
+
+    /* Footer */
+    .footer-glass {
+      background: var(--glass-bg);
+      -webkit-backdrop-filter: blur(8px);
+      backdrop-filter: blur(8px);
+      padding: 1rem 0;
+      text-align: center;
+      color: var(--text);
+      margin-top: 50px;
+      border-radius: 0.5rem;
+    }
+
+    /* Responsive flex for features */
+    .features-container {
+      display: flex; flex-wrap: wrap; gap: 2rem; justify-content: center;
+    }
+    .feature-card {
+      width: 250px; max-width: 100%;
+    }
+  </style>
+</head>
+<body data-theme="light">
+
+<!-- Loader -->
+<div id="loaderOverlay" class="loader-overlay">
+  <div class="loader-3d"></div>
+</div>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg glass-nav">
+  <div class="container">
+    <a class="navbar-brand fw-bold glow-text" href="/" title="Home" style="color:var(--primary)">📰 News Summarizer</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation" title="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+      <ul class="navbar-nav nav-slider position-relative">
+        <li class="nav-item"><a class="nav-link active" href="/about" title="About page">About</a></li>
+        <li class="nav-item"><a class="nav-link" href="/features" title="Features page">Features</a></li>
+        <li class="nav-item"><a class="nav-link" href="/summarize" title="Summarize text">Summarize</a></li>
+        <li class="nav-item"><a class="nav-link" href="/news" title="Search news">News</a></li>
+        <div class="slider"></div>
+      </ul>
+      <button id="themeToggle" class="btn btn-outline-light ms-3" title="Toggle theme">
+        <i class="bi bi-sun-fill"></i>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- Main Content -->
+<main class="container my-5">
+
+  <!-- Intro Card -->
+  <div class="card tilt text-center p-5 mb-5">
+    <h1 class="fw-bold text-primary mb-3">Welcome to News Summarizer</h1>
+    <p class="lead">Your AI-powered assistant for instant summaries of news and articles. Save time, stay informed, and explore content in multiple languages!</p>
+    <button class="btn btn-primary btn-3d mt-3">Try it Now</button>
+  </div>
+
+  <!-- Features Section -->
+  <h2 class="text-center text-primary mb-4">Key Features</h2>
+  <div class="features-container">
+    <div class="card tilt feature-card p-4 text-center">
+      <i class="bi bi-lightning-fill card-icon mb-3"></i>
+      <h5 class="fw-bold">Fast Summarization</h5>
+      <p>Instantly condense any article or news into clear summaries.</p>
+    </div>
+    <div class="card tilt feature-card p-4 text-center">
+      <i class="bi bi-newspaper card-icon mb-3"></i>
+      <h5 class="fw-bold">News Fetching</h5>
+      <p>Get the latest news and auto-generated summaries in one click.</p>
+    </div>
+    <div class="card tilt feature-card p-4 text-center">
+      <i class="bi bi-translate card-icon mb-3"></i>
+      <h5 class="fw-bold">Multi-language Support</h5>
+      <p>Read and summarize content in English, Hindi, Marathi, Telugu, and Bhojpuri.</p>
+    </div>
+    <div class="card tilt feature-card p-4 text-center">
+      <i class="bi bi-shuffle card-icon mb-3"></i>
+      <h5 class="fw-bold">Interactive UI</h5>
+      <p>Fully responsive design with animations and hover effects.</p>
+    </div>
+  </div>
+
+</main>
+
+<!-- Footer -->
+<footer class="footer-glass">
+  &copy; 2025 News Summarizer | Made with ❤️ using Flask & Bootstrap
+</footer>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+  // Loader
+  const loader = document.getElementById("loaderOverlay");
+  window.addEventListener("load", ()=> loader.classList.remove("show"));
+
+  // Navbar slider
+  document.addEventListener("DOMContentLoaded", ()=>{
+    const links = document.querySelectorAll(".nav-slider .nav-link");
+    const slider = document.querySelector(".nav-slider .slider");
+    const active = document.querySelector(".nav-slider .nav-link.active");
+    function moveSlider(link){ slider.style.width = link.offsetWidth+'px'; slider.style.left = link.offsetLeft+'px'; }
+    if(active) moveSlider(active);
+    links.forEach(link=>{
+      link.addEventListener("mouseenter", ()=> moveSlider(link));
+      link.addEventListener("click", ()=>{
+        links.forEach(l=>l.classList.remove("active"));
+        link.classList.add("active");
+        moveSlider(link);
+      });
+    });
+  });
+
+  // Theme toggle
+  const themeToggle = document.getElementById("themeToggle");
+  const body = document.body;
+  function setTheme(t){
+    body.setAttribute("data-theme", t);
+    localStorage.setItem("theme", t);
+    themeToggle.innerHTML = t==="dark" ? "<i class='bi bi-moon-stars-fill'></i>" : "<i class='bi bi-sun-fill'></i>";
+  }
+  setTheme(localStorage.getItem("theme")||"light");
+  themeToggle.addEventListener("click", ()=> setTheme(body.getAttribute("data-theme")==="dark"?"light":"dark"));
+
+  // 3D tilt cards
+  document.querySelectorAll(".tilt").forEach(card=>{
+    card.addEventListener("mousemove", e=>{
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      const cx = rect.width/2, cy = rect.height/2;
+      const rx = ((y-cy)/cy)*5;
+      const ry = ((cx-x)/cx)*5;
+      card.style.setProperty('--rx', rx+'deg');
+      card.style.setProperty('--ry', ry+'deg');
+    });
+    card.addEventListener("mouseleave", ()=> {
+      card.style.setProperty('--rx','0deg');
+      card.style.setProperty('--ry','0deg');
+    });
+  });
+</script>
+
+</body>
+</html>

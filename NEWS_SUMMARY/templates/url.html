@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Summarize from URL | News Summarizer</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='url.css') }}">
+</head>
+<body data-theme="light">
+
+<!-- Loader -->
+<div id="loaderOverlay" class="loader-overlay">
+  <div class="loader-3d"></div>
+</div>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg glass-nav sticky-top">
+  <div class="container">
+    <a class="navbar-brand fw-bold glow-text" href="/">📰 News Summarizer</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+      <ul class="navbar-nav nav-slider">
+        <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="/summarize">Summarize Text</a></li>
+        <li class="nav-item"><a class="nav-link active" href="/url">From URL</a></li>
+        <li class="nav-item"><a class="nav-link active" href="/news">Search news</a></li>
+        <div class="slider"></div>
+      </ul>
+      <button id="themeToggle" class="btn btn-outline-light ms-3" title="Toggle theme"><i class="bi bi-sun-fill"></i></button>
+    </div>
+  </div>
+</nav>
+
+<!-- Main Container -->
+<main class="main-container">
+
+  <!-- URL Form Card -->
+  <div class="card shadow-3d tilt search-card search-card-size p-4 mb-5">
+    <h3 class="mb-4 text-primary text-center glow-text">🔗 Summarize an Article</h3>
+    <form method="POST" action="/url" id="urlForm">
+      <div class="mb-3">
+        <label for="urlInput" class="form-label fw-semibold">Paste URL or Article</label>
+        <textarea id="urlInput" name="url" class="form-control" placeholder="Paste your article or URL here..." 
+                  rows="2" required oninput="autoGrow(this)"></textarea>
+      </div>
+
+      <div class="d-flex gap-3 mb-3 flex-wrap align-items-center">
+        <select id="languageSelect" name="language" class="form-select w-auto" title="Choose language">
+  <option value="en" title="English" selected>English</option>
+  <option value="hi" title="Hindi">Hindi</option>
+  <option value="mr" title="Marathi">Marathi</option>
+  <option value="te" title="Telugu">Telugu</option>
+  <option value="bho" title="Bhojpuri">Bhojpuri</option>
+</select>
+
+        {% if audio_file %}
+        <audio controls class="audio-player flex-grow-1">
+          <source src="{{ url_for('static', filename='summary.mp3') }}" type="audio/mpeg">
+        </audio>
+        {% endif %}
+      </div>
+
+      <button type="submit" class="btn-3d w-100 mt-2">Fetch & Summarize</button>
+    </form>
+  </div>
+
+  <!-- Results Card -->
+  {% if result %}
+    {% if result.error %}
+      <div class="alert alert-danger">{{ result.error }}</div>
+    {% else %}
+      <div class="card shadow-3d tilt article-card search-card-size p-3 mb-5">
+        <h4 class="article-title">{{ result.title }}</h4>
+        <p><b>Author:</b> {{ result.author }}</p>
+        <p><b>Published:</b> {{ result.publishedAt }}</p>
+        <p><b>Summary:</b> {{ result.summary }}</p>
+        <a href="{{ result.url }}" target="_blank" class="btn-3d-outline mt-3 w-100">🔗 Read Full Article</a>
+      </div>
+    {% endif %}
+  {% endif %}
+
+</main>
+
+<!-- Footer -->
+<footer class="footer-glass">
+  &copy; 2025 News Summarizer | Made with ❤️ using Flask & Bootstrap
+</footer>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Custom JS -->
+<script>
+  // Loader
+const form = document.getElementById("urlForm");
+const loader = document.getElementById("loaderOverlay");
+form.addEventListener("submit", ()=>{
+  loader.classList.add("show");
+});
+
+// Navbar Slider
+document.addEventListener("DOMContentLoaded", ()=>{
+  const links = document.querySelectorAll(".nav-slider .nav-link");
+  const slider = document.querySelector(".nav-slider .slider");
+  const active = document.querySelector(".nav-slider .nav-link.active");
+  function moveSlider(a){slider.style.width=a.offsetWidth+'px'; slider.style.left=a.offsetLeft+'px';}
+  if(active) moveSlider(active);
+  links.forEach(l=>l.addEventListener("click", ()=>{
+    links.forEach(x=>x.classList.remove("active"));
+    l.classList.add("active");
+    moveSlider(l);
+  }));
+});
+
+// Theme Toggle
+const themeToggle = document.getElementById("themeToggle");
+const body = document.body;
+function setTheme(t){
+  body.setAttribute("data-theme", t);
+  localStorage.setItem("theme", t);
+  themeToggle.innerHTML = t==="dark" ? "<i class='bi bi-moon-stars-fill'></i>" : "<i class='bi bi-sun-fill'></i>";
+}
+setTheme(localStorage.getItem("theme")||"light");
+themeToggle.addEventListener("click", ()=> setTheme(body.getAttribute("data-theme")==="dark"?"light":"dark"));
+
+// Auto-grow textarea
+function autoGrow(el){
+  el.style.height = "auto";
+  el.style.height = (el.scrollHeight) + "px";
+}
+
+// 3D Tilt Effect
+document.querySelectorAll(".tilt").forEach(card=>{
+  const interactive = card.querySelectorAll("input, select, button, textarea, audio, a");
+  card.addEventListener("mousemove", e=>{
+    if(interactive.some(el => el.contains(e.target))) return;
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const cx = rect.width/2, cy = rect.height/2;
+    const rx = ((y-cy)/cy)*5;
+    const ry = ((cx-x)/cx)*5;
+    card.style.transform = `rotateX(${rx}deg) rotateY(${ry}deg) scale(1.02)`;
+  });
+  card.addEventListener("mouseleave", ()=> card.style.transform="rotateX(0) rotateY(0) scale(1)");
+});
+
+</script>
+</body>
+</html>

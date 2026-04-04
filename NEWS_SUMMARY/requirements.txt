@@ -1,0 +1,14 @@
+flask
+sumy
+requests
+newspaper3k
+deep-translator
+gTTS
+pytz
+lxml
+nltk
+flask-cors
+gunicorn
+lxml_html_clean
+lxml[html_clean]
+

@@ -1,0 +1,193 @@
+/* ==============================
+   :root variables
+   ============================== */
+:root {
+  --text: #222;
+  --accent: #0d6efd;
+  --card-bg: rgba(255,255,255,0.9);
+  --shadow: rgba(0,0,0,0.15);
+  --font-family: 'Poppins', sans-serif;
+}
+
+/* ==============================
+   Body & Theme
+   ============================== */
+body {
+  font-family: var(--font-family);
+  background: #f8f9fa;
+  color: var(--text);
+  transition: background 0.3s, color 0.3s;
+}
+
+body[data-theme="dark"] {
+  background: #121212;
+  color: #eee;
+}
+
+body[data-theme="dark"] .card {
+  background: rgba(20,20,20,0.9);
+  color: #eee;
+}
+
+/* ==============================
+   Navbar
+   ============================== */
+.glass-nav {
+  background: rgba(255,255,255,0.15);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 2px 15px var(--shadow);
+  transition: background 0.3s, box-shadow 0.3s;
+  position: sticky;
+  top: 0;
+  z-index: 1030;
+}
+
+.navbar-brand,
+.nav-link {
+  color: var(--accent) !important;
+  font-weight: 600;
+  text-shadow: 0 0 5px rgba(0,0,0,0.2);
+}
+
+.nav-link.active {
+  font-weight: 700;
+}
+
+/* Glow text for brand */
+.glow-text {
+  text-shadow: 0 0 5px rgba(0,123,255,0.8), 0 0 10px rgba(0,123,255,0.6);
+}
+
+/* Navbar slider */
+.nav-slider {
+  position: relative;
+}
+.nav-slider .slider {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 3px;
+  background: var(--accent);
+  border-radius: 2px;
+  transition: 0.3s;
+}
+
+/* ==============================
+   Main Container & Cards
+   ============================== */
+.main-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 3rem 1rem;
+}
+
+.search-card, .article-card {
+  max-width: 700px;
+  width: 90%;
+  border-radius: 15px;
+  background: var(--card-bg);
+  padding: 1.5rem;
+  color: var(--text);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+/* 3D tilt effect */
+.tilt {
+  transform-style: preserve-3d;
+  transition: transform 0.2s ease-out;
+}
+.tilt:hover {
+  box-shadow: 0 15px 30px var(--shadow);
+}
+
+/* Audio player alignment */
+.d-flex.align-items-center audio.audio-player {
+  height: 40px;
+  margin: 0;
+}
+
+/* ==============================
+   Buttons
+   ============================== */
+.btn-3d {
+  background: linear-gradient(45deg, var(--accent), #4b9eff);
+  color: #fff;
+  border-radius: 10px;
+  padding: 0.75rem;
+  font-weight: 600;
+  transition: all 0.3s;
+}
+.btn-3d:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 15px var(--accent);
+}
+
+.btn-3d-outline {
+  border: 2px solid var(--accent);
+  color: var(--accent);
+  border-radius: 10px;
+  transition: all 0.3s;
+}
+.btn-3d-outline:hover {
+  background: var(--accent);
+  color: #fff;
+  transform: scale(1.05);
+  box-shadow: 0 0 15px var(--accent);
+}
+
+/* ==============================
+   Footer
+   ============================== */
+.footer-glass {
+  position: relative;
+  background: rgba(255,255,255,0.15);
+  -webkit-backdrop-filter: blur(5px);
+  backdrop-filter: blur(5px);
+  color: var(--text);
+  padding: 1rem 0;
+  width: 100%;
+  text-align: center;
+}
+
+/* ==============================
+   Loader
+   ============================== */
+.loader-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.7);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+.loader-overlay.show { display: flex; }
+.loader-3d {
+  width: 70px;
+  height: 70px;
+  border: 5px solid transparent;
+  border-top: 5px solid var(--accent);
+  border-right: 5px solid var(--accent);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  box-shadow: 0 0 20px var(--accent);
+}
+@keyframes spin { 0%{transform:rotate(0deg);}100%{transform:rotate(360deg);} }
+
+/* ==============================
+   Textarea
+   ============================== */
+textarea {
+  resize: none;
+  min-height: 50px;
+}
+
+/* ==============================
+   Responsive
+   ============================== */
+@media(max-width: 768px) {
+  .search-card, .article-card { width: 95%; }
+  .d-flex.align-items-center { flex-direction: column; align-items: stretch; }
+}

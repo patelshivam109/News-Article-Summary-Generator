@@ -1,0 +1,217 @@
+:root {
+  --bg: #f8f9fa;
+  --text: #212529;
+  --card-bg: #ffffff;
+  --accent: #0d6efd;
+  --shadow: rgba(0,0,0,0.1);
+}
+
+[data-theme="dark"] {
+  --bg: #0d1117;
+  --text: #e6edf3;
+  --card-bg: #161b22;
+  --accent: #58a6ff;
+  --shadow: rgba(0,0,0,0.5);
+}
+
+/* Body & Font */
+body {
+  font-family: 'Poppins', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  transition: background 0.4s, color 0.4s;
+  margin: 0;
+}
+
+/* Main container */
+.main-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 85vh;
+  padding: 2rem 1rem;
+}
+
+/* Glass Navbar */
+.glass-nav {
+  background: rgba(0,0,0,0.5);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 2px 15px var(--shadow);
+  position: sticky;
+  top: 0;
+  z-index: 1030;
+  transition: background 0.3s, box-shadow 0.3s;
+}
+
+/* Navbar Brand */
+.navbar-brand {
+  font-weight: 700;
+  color: #0d6efd !important;
+  text-shadow: 0 0 5px rgba(0,0,0,0.2);
+}
+
+[data-theme="dark"] .navbar-brand {
+  color: #58a6ff !important;
+}
+
+/* Navbar links */
+.glass-nav .nav-link {
+  color: var(--text);
+  font-weight: 500;
+  transition: color 0.3s;
+}
+.glass-nav .nav-link:hover,
+.glass-nav .nav-link.active {
+  color: var(--accent);
+}
+
+/* Slider underline */
+.nav-slider { position: relative; }
+.nav-slider .slider {
+  position: absolute; bottom: 0; left: 0; height: 2px;
+  width: 0; background: var(--accent);
+  border-radius: 2px; transition: all 0.4s ease;
+}
+
+/* Search Card */
+.search-card {
+  border-radius: 15px;
+  background: var(--card-bg);
+  padding: 2rem;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.search-card-size {
+  max-width: 500px;
+  width: 90%;
+}
+
+/* Article Cards */
+.article-card {
+  border-radius: 15px;
+  background: var(--card-bg);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s, box-shadow 0.3s;
+  color: var(--text); /* ensure text color */
+}
+
+/* Ensure all headings and paragraphs visible */
+.article-card h5,
+.article-card p {
+  color: var(--text);
+}
+
+[data-theme="dark"] .article-card,
+[data-theme="dark"] .article-card h5,
+[data-theme="dark"] .article-card p {
+  color: #e6edf3; /* light text for dark mode */
+  text-shadow: 0 0 2px rgba(0,0,0,0.3); /* subtle shadow for contrast */
+}
+
+/* 3D Shadow & Tilt */
+.shadow-3d {
+  box-shadow: 0 10px 25px var(--shadow);
+}
+.tilt {
+  transform-style: preserve-3d;
+  transition: transform 0.2s ease-out;
+}
+.search-card:hover,
+.article-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 15px 30px var(--shadow);
+}
+
+/* Buttons */
+.btn-3d {
+  background: linear-gradient(45deg, var(--accent), #4b9eff);
+  color: white;
+  border: none;
+  padding: 0.75rem 1rem;
+  font-weight: 600;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+}
+.btn-3d:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 15px var(--accent);
+}
+
+.btn-3d-outline {
+  background: transparent;
+  border: 2px solid var(--accent);
+  color: var(--accent);
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+}
+.btn-3d-outline:hover {
+  background: var(--accent);
+  color: white;
+  transform: scale(1.05);
+  box-shadow: 0 0 15px var(--accent);
+}
+
+/* Form Inputs */
+.form-control, .form-select {
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  transition: 0.3s;
+}
+.form-control:focus, .form-select:focus {
+  box-shadow: 0 0 10px var(--accent);
+  border-color: var(--accent);
+}
+
+/* Audio Player */
+.audio-player {
+  width: 100%;
+  height: 40px;
+  margin-top: 0.5rem;
+}
+
+/* Loader */
+.loader-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.7);
+  display: none;
+  pointer-events: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+.loader-overlay.show {
+  display: flex;
+  pointer-events: all;
+}
+.loader-3d {
+  width: 70px;
+  height: 70px;
+  border: 5px solid transparent;
+  border-top: 5px solid var(--accent);
+  border-right: 5px solid var(--accent);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  box-shadow: 0 0 20px var(--accent);
+}
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Footer Glass */
+.footer-glass {
+  background: rgba(0,0,0,0.15);
+  -webkit-backdrop-filter: blur(5px);
+  backdrop-filter: blur(5px);
+  color: var(--text);
+  font-size: 0.9rem;
+  padding: 1rem 0;
+  width: 100%;
+  text-align: center;
+}

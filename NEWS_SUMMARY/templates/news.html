@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Search News | News Summarizer</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='news.css') }}">
+</head>
+<body>
+
+<!-- Loader -->
+<div id="loaderOverlay" class="loader-overlay">
+  <div class="loader-3d"></div>
+</div>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg glass-nav sticky-top">
+  <div class="container">
+    <a class="navbar-brand fw-bold glow-text" href="/">📰 News Summarizer</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation" title="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+      <ul class="navbar-nav nav-slider">
+        <li class="nav-item"><a class="nav-link {% if request.path == '/' %}active{% endif %}" href="/">Home</a></li>
+        <li class="nav-item"><a class="nav-link {% if request.path == '/summarize' %}active{% endif %}" href="/summarize">Summarize Text</a></li>
+        <li class="nav-item"><a class="nav-link {% if request.path == '/url' %}active{% endif %}" href="/url">From URL</a></li>
+        <li class="nav-item"><a class="nav-link {% if request.path == '/news' %}active{% endif %}" href="/news">Search News</a></li>
+        <div class="slider"></div>
+      </ul>
+      <button id="themeToggle" class="btn btn-outline-light ms-3" title="Toggle theme"><i class="bi bi-sun-fill"></i></button>
+    </div>
+  </div>
+</nav>
+
+<!-- Main Content -->
+<main class="main-container">
+
+  <!-- Search Card -->
+  <div class="card search-card shadow-3d tilt search-card-size">
+    <h3 class="mb-4 text-primary text-center glow-text">🔎 Search Latest News</h3>
+    <form method="POST" action="/news" id="newsForm" class="w-100">
+      <div class="mb-3">
+        <label for="keywordInput" class="form-label fw-semibold">Keyword</label>
+        <input id="keywordInput" type="text" class="form-control" name="keyword" placeholder="Enter a keyword..." required>
+      </div>
+      <div class="mb-3">
+        <label for="languageSelect" class="form-label fw-semibold">Choose Language</label>
+        <select id="languageSelect" name="language" class="form-select">
+          <option value="en">English</option>
+          <option value="hi">Hindi</option>
+          <option value="mr">Marathi</option>
+          <option value="te">Telugu</option>
+          <option value="bho">Bhojpuri</option>
+        </select>
+      </div>
+      <button type="submit" class="btn-3d w-100 mt-3">Search News</button>
+    </form>
+  </div>
+
+  <!-- Articles Section -->
+  <div id="articlesSection" class="w-100 mt-5">
+    {% if articles %}
+      <h4 class="mb-4 text-center text-secondary glow-text">📰 Search Results</h4>
+      <div class="row g-4">
+        {% for article in articles %}
+        <div class="col-md-6 col-lg-4">
+          <div class="card article-card shadow-3d tilt">
+            <div class="card-body d-flex flex-column">
+              <h5 class="article-title">{{ article.title }}</h5>
+              <p class="article-meta"><strong>Author:</strong> {{ article.author if article.author else "Unknown" }}</p>
+              <p class="article-meta"><strong>Date:</strong> {{ article.publishedAt }}</p>
+              <p class="article-summary">{{ article.summary }}</p>
+
+              <audio controls class="audio-player mt-2">
+                <source src="{{ url_for('tts') }}?text={{ article.summary }}&lang={{ article.language }}" type="audio/mpeg">
+              </audio>
+
+              <a href="{{ article.url }}" target="_blank" class="btn-3d-outline mt-3 w-100">Read Full Article 🔗</a>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+  </div>
+
+</main>
+
+<!-- Footer -->
+<footer class="footer-glass py-3 text-center">
+  © 2025 News Summarizer | Made with ❤️ using Flask & Bootstrap
+</footer>
+
+<!-- Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  // Loader
+const form = document.getElementById("newsForm");
+const loader = document.getElementById("loaderOverlay");
+form.addEventListener("submit", (e)=>{
+  loader.classList.add("show");
+});
+
+// Navbar Slider
+document.addEventListener("DOMContentLoaded", ()=>{
+  const links = document.querySelectorAll(".nav-slider .nav-link");
+  const slider = document.querySelector(".nav-slider .slider");
+  const active = document.querySelector(".nav-slider .nav-link.active");
+  function moveSlider(a){slider.style.width=a.offsetWidth+'px'; slider.style.left=a.offsetLeft+'px';}
+  if(active) moveSlider(active);
+  links.forEach(l=>l.addEventListener("click", ()=>{
+    links.forEach(x=>x.classList.remove("active"));
+    l.classList.add("active");
+    moveSlider(l);
+  }));
+});
+
+// Theme Toggle
+const themeToggle = document.getElementById("themeToggle");
+const body = document.body;
+function setTheme(t){
+  body.setAttribute("data-theme", t);
+  localStorage.setItem("theme", t);
+  themeToggle.innerHTML = t==="dark" ? "<i class='bi bi-moon-stars-fill'></i>" : "<i class='bi bi-sun-fill'></i>";
+}
+setTheme(localStorage.getItem("theme")||"light");
+themeToggle.addEventListener("click", ()=> setTheme(body.getAttribute("data-theme")==="dark"?"light":"dark"));
+
+// 3D Tilt Effect for cards
+document.querySelectorAll(".tilt").forEach(card=>{
+  // exclude interactive elements like inputs and buttons
+  const interactive = card.querySelectorAll("input, select, button, audio, a");
+  
+  card.addEventListener("mousemove", e=>{
+    // ignore if hovering over interactive element
+    if(interactive.some(el => el.contains(e.target))) return;
+
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const centerX = rect.width/2, centerY = rect.height/2;
+    const rotateX = ((y-centerY)/centerY)*5; // reduced tilt for stability
+    const rotateY = ((centerX-x)/centerX)*5;
+    card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`;
+  });
+
+  card.addEventListener("mouseleave", ()=> card.style.transform="rotateX(0) rotateY(0) scale(1)");
+});
+
+
+</script>
+</body>
+</html>
