@@ -48,7 +48,7 @@ export default function Settings(){
         <Card className="mb-4">
           <div className="flex items-center justify-between pb-4 border-b border-slate-700">
             <div>
-              <div className="font-semibold text-slate-100">🌙 Dark Mode</div>
+              <div className="font-semibold text-slate-900 dark:text-slate-100">🌙 Dark Mode</div>
               <div className="text-sm text-slate-400 mt-1">Toggle between dark and light theme</div>
             </div>
             <ThemeToggle />
@@ -58,7 +58,7 @@ export default function Settings(){
         {/* Language Setting */}
         <Card className="mb-4">
           <div>
-            <div className="font-semibold text-slate-100 mb-3">🌍 Default Language</div>
+            <div className="font-semibold text-slate-900 dark:text-slate-100 mb-3">🌍 Default Language</div>
             <div className="text-sm text-slate-400 mb-4">Choose your preferred language for summaries</div>
             <div className="grid grid-cols-2 gap-2">
               {languages.map(lang => (
@@ -82,7 +82,7 @@ export default function Settings(){
         {/* Summary Length Setting */}
         <Card className="mb-4">
           <div>
-            <div className="font-semibold text-slate-100 mb-3">📊 Default Summary Length</div>
+            <div className="font-semibold text-slate-900 dark:text-slate-100 mb-3">📊 Default Summary Length</div>
             <div className="text-sm text-slate-400 mb-4">Choose how detailed summaries should be</div>
             <div className="space-y-2">
               {summaryOptions.map(opt => (
@@ -103,7 +103,7 @@ export default function Settings(){
                     className="w-4 h-4"
                   />
                   <div className="ml-3">
-                    <div className="font-medium text-slate-100">{opt.label}</div>
+                    <div className="font-medium text-slate-900 dark:text-slate-100">{opt.label}</div>
                     <div className="text-xs text-slate-400">{opt.desc}</div>
                   </div>
                 </label>
@@ -116,7 +116,7 @@ export default function Settings(){
         <Card className="mb-4">
           <div className="flex items-center justify-between pb-4 border-b border-slate-700">
             <div>
-              <div className="font-semibold text-slate-100">💾 Auto-Save Summaries</div>
+              <div className="font-semibold text-slate-900 dark:text-slate-100">💾 Auto-Save Summaries</div>
               <div className="text-sm text-slate-400 mt-1">Automatically save generated summaries</div>
             </div>
             <label className="flex items-center cursor-pointer">
@@ -134,7 +134,7 @@ export default function Settings(){
         <Card className="mb-4">
           <div className="flex items-center justify-between">
             <div>
-              <div className="font-semibold text-slate-100">🔔 Browser Notifications</div>
+              <div className="font-semibold text-slate-900 dark:text-slate-100">🔔 Browser Notifications</div>
               <div className="text-sm text-slate-400 mt-1">Get notifications when summaries are ready</div>
             </div>
             <label className="flex items-center cursor-pointer">

@@ -111,11 +111,11 @@ export default function InputPanel({ onGenerate }){
           value={language} 
           onChange={e => setLanguage(e.target.value)}
         >
-          <option value="en">🇬🇧 English</option>
-          <option value="hi">🇮🇳 Hindi</option>
-          <option value="mr">🇮🇳 Marathi</option>
-          <option value="te">🇮🇳 Telugu</option>
-          <option value="bho">🇮🇳 Bhojpuri</option>
+          <option value="en"> English</option>
+          <option value="hi"> Hindi</option>
+          <option value="mr"> Marathi</option>
+          <option value="te"> Telugu</option>
+          <option value="bho"> Bhojpuri</option>
         </select>
 
         <select 
@@ -123,14 +123,14 @@ export default function InputPanel({ onGenerate }){
           value={length} 
           onChange={e => setLength(e.target.value)}
         >
-          <option value="short">📝 Short (2 sent.)</option>
-          <option value="medium">📋 Medium (5 sent.)</option>
-          <option value="long">📄 Long (8 sent.)</option>
+          <option value="short"> Short (2 sent.)</option>
+          <option value="medium"> Medium (5 sent.)</option>
+          <option value="long"> Long (8 sent.)</option>
         </select>
 
         <div className="flex-1" />
         <Button onClick={handleGenerate} className="whitespace-nowrap">
-          ✨ Generate
+           Generate
         </Button>
       </div>
     </Card>

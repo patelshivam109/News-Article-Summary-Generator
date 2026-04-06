@@ -54,7 +54,7 @@ export default function Dashboard(){
   return (
     <div className="min-h-screen flex">
       <Sidebar />
-      <div className="flex-1 flex flex-col bg-slate-900 text-slate-100">
+      <div className="flex-1 flex flex-col bg-slate-50 text-slate-900 dark:bg-slate-900 dark:text-slate-100">
         <Navbar />
         <main className="p-6">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">

@@ -47,11 +47,11 @@ export default function History(){
       {items.length > 0 && (
         <div className="mb-6 flex flex-wrap gap-3">
           <div>
-            <label className="text-sm text-slate-300 mb-1 block">Filter by type:</label>
+            <label className="text-sm text-slate-700 dark:text-slate-300 mb-1 block">Filter by type:</label>
             <select
               value={filter}
               onChange={(e) => setFilter(e.target.value)}
-              className="px-3 py-2 bg-slate-800 border border-slate-700 rounded text-slate-100 text-sm focus:outline-none focus:border-indigo-500"
+              className="px-3 py-2 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded text-slate-900 dark:text-slate-100 text-sm focus:outline-none focus:border-indigo-500"
             >
               <option value="all">📋 All Types</option>
               <option value="url">🔗 From URL</option>
@@ -61,11 +61,11 @@ export default function History(){
           </div>
 
           <div>
-            <label className="text-sm text-slate-300 mb-1 block">Sort by:</label>
+            <label className="text-sm text-slate-700 dark:text-slate-300 mb-1 block">Sort by:</label>
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value)}
-              className="px-3 py-2 bg-slate-800 border border-slate-700 rounded text-slate-100 text-sm focus:outline-none focus:border-indigo-500"
+              className="px-3 py-2 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded text-slate-900 dark:text-slate-100 text-sm focus:outline-none focus:border-indigo-500"
             >
               <option value="newest">🆕 Newest First</option>
               <option value="oldest">📅 Oldest First</option>
@@ -105,7 +105,7 @@ export default function History(){
                     </span>
                   </div>
                   
-                  <div className="font-semibold text-slate-100 mb-2">{it.title}</div>
+                  <div className="font-semibold text-slate-900 dark:text-slate-100 mb-2">{it.title}</div>
                   
                   <p className="text-slate-400 text-sm line-clamp-2">{it.summary}</p>
 

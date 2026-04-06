@@ -54,18 +54,18 @@ export default function Saved(){
   return (
     <div className="min-h-screen flex">
       <Sidebar />
-      <div className="flex-1 flex flex-col bg-slate-900 text-slate-100">
+      <div className="flex-1 flex flex-col bg-slate-50 text-slate-900 dark:bg-slate-900 dark:text-slate-100">
         <Navbar />
         <main className="p-6">
           <div className="max-w-4xl">
             <div className="mb-6">
               <h3 className="text-2xl font-bold">📚 Saved Summaries</h3>
-              <p className="text-slate-400 text-sm mt-1">{items.length} summary{items.length !== 1 ? 's' : ''} saved</p>
+              <p className="text-slate-600 dark:text-slate-400 text-sm mt-1">{items.length} summary{items.length !== 1 ? 's' : ''} saved</p>
             </div>
 
             {loading && (
               <Card className="mb-4">
-                <p className="text-slate-400">Loading saved summaries...</p>
+                <p className="text-slate-600 dark:text-slate-400">Loading saved summaries...</p>
               </Card>
             )}
 
@@ -91,7 +91,7 @@ export default function Saved(){
                     >
                       <div className="flex items-start justify-between">
                         <div className="flex-1">
-                          <h4 className="font-semibold text-slate-100 hover:text-indigo-400 transition">
+                          <h4 className="font-semibold text-slate-900 dark:text-slate-100 hover:text-indigo-400 transition">
                             {item.title}
                           </h4>
                           <div className="flex items-center gap-2 mt-2 flex-wrap">
@@ -107,7 +107,7 @@ export default function Saved(){
                               </span>
                             )}
                           </div>
-                          <p className="text-slate-400 text-sm mt-2 line-clamp-2">
+                          <p className="text-slate-600 dark:text-slate-400 text-sm mt-2 line-clamp-2">
                             {item.summary}
                           </p>
                         </div>
@@ -118,10 +118,10 @@ export default function Saved(){
                     </button>
 
                     {expanded === item.id && (
-                      <div className="mt-4 pt-4 border-t border-slate-700 space-y-4">
+                          <div className="mt-4 pt-4 border-t border-slate-200 dark:border-slate-700 space-y-4">
                         <div>
-                          <h5 className="text-sm font-semibold text-slate-200 mb-2">Full Summary</h5>
-                          <p className="text-slate-300 leading-relaxed text-sm">{item.summary}</p>
+                          <h5 className="text-sm font-semibold text-slate-800 dark:text-slate-200 mb-2">Full Summary</h5>
+                          <p className="text-slate-700 dark:text-slate-300 leading-relaxed text-sm">{item.summary}</p>
                         </div>
 
                         <div className="flex flex-wrap gap-2">
@@ -136,7 +136,7 @@ export default function Saved(){
                               href={item.url}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="px-3 py-2 bg-slate-700 hover:bg-slate-600 text-slate-100 rounded-lg text-sm font-medium transition"
+                                className="px-3 py-2 bg-slate-200 hover:bg-slate-300 dark:bg-slate-700 dark:hover:bg-slate-600 text-slate-800 dark:text-slate-100 rounded-lg text-sm font-medium transition"
                             >
                               🔗 View Source
                             </a>
