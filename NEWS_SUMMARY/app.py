@@ -12,7 +12,10 @@ import os
 import io
 from flask import send_file
 from flask_cors import CORS
-# ---------------- APP SETUP ---------------- # 
+import json
+import uuid
+
+# ---------------- APP SETUP ---------------- #
 app = Flask(__name__)
 CORS(app)
 
@@ -32,6 +35,22 @@ def generate_summary(text, sentence_count=3):
     summarizer = LuhnSummarizer()
     summary = summarizer(parser.document, sentence_count)
     return " ".join(str(sentence) for sentence in summary)
+
+# Storage for saved summaries
+SAVED_FILE = "saved_summaries.json"
+
+def load_saved_summaries():
+    if os.path.exists(SAVED_FILE):
+        try:
+            with open(SAVED_FILE, 'r') as f:
+                return json.load(f)
+        except:
+            return []
+    return []
+
+def save_summaries(data):
+    with open(SAVED_FILE, 'w') as f:
+        json.dump(data, f, indent=2)
 
 def translate_text(text, target_lang="en"):
     """Translate text to target language if not English."""
@@ -304,6 +323,62 @@ def api_url():
     except Exception as e:
         return jsonify({"error": f"Failed to fetch article: {e}"}), 500
 
+
+@app.route("/api/saved", methods=["GET"])
+def api_get_saved():
+    """Get all saved summaries with pagination"""
+    page = int(request.args.get("page", 1))
+    limit = int(request.args.get("limit", 10))
+    
+    all_saved = load_saved_summaries()
+    # Sort by date descending (newest first)
+    all_saved = sorted(all_saved, key=lambda x: x.get("date", ""), reverse=True)
+    
+    start = (page - 1) * limit
+    end = start + limit
+    
+    return jsonify({
+        "summaries": all_saved[start:end],
+        "total": len(all_saved),
+        "page": page,
+        "limit": limit,
+        "pages": (len(all_saved) + limit - 1) // limit
+    })
+
+
+@app.route("/api/saved", methods=["POST"])
+def api_save_summary():
+    """Save a new summary"""
+    data = request.get_json() or {}
+    
+    summary_obj = {
+        "id": str(uuid.uuid4()),
+        "title": data.get("title", "Untitled"),
+        "summary": data.get("summary", ""),
+        "language": data.get("language", "en"),
+        "url": data.get("url"),
+        "mode": data.get("mode", "text"),
+        "date": datetime.now().isoformat()
+    }
+    
+    if not summary_obj["summary"].strip():
+        return jsonify({"error": "Summary cannot be empty"}), 400
+    
+    all_saved = load_saved_summaries()
+    all_saved.append(summary_obj)
+    save_summaries(all_saved)
+    
+    return jsonify({"success": True, "id": summary_obj["id"]})
+
+
+@app.route("/api/saved/<summary_id>", methods=["DELETE"])
+def api_delete_summary(summary_id):
+    """Delete a saved summary by ID"""
+    all_saved = load_saved_summaries()
+    all_saved = [s for s in all_saved if s.get("id") != summary_id]
+    save_summaries(all_saved)
+    
+    return jsonify({"success": True})
 
 # ---------------- MAIN ---------------- #
 

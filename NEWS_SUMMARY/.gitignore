@@ -1,81 +1,87 @@
-# Python
+# ------------------------------
+# Python / Flask
+# ------------------------------
 __pycache__/
-/.venv/
+*.py[cod]
+*$py.class
+
+.venv/
 venv/
 env/
+env.bak/
+venv.bak/
+
 build/
 dist/
-/.*/
-/**/.egg-info/
-/**/.egg
+*.egg-info/
+*.egg
+
 pip-log.txt
 pip-delete-this-directory.txt
+
 htmlcov/
 .tox/
 .nox/
 .coverage
 .coverage.*
-.cache
-/.pytest_cache/
+.pytest_cache/
+.cache/
 
-# Flask instance folder
 instance/
 .webassets-cache
 
-# Jupyter
-.ipynb_checkpoints
+# Database / local persistence
+*.sqlite3
+saved_summaries.json
 
-# Pyenv
-.python-version
+# Generated media
+summary.mp3
+static/summary.mp3
 
-# Backup venvs
-env.bak/
-venv.bak/
-
-# Database
-/**/*.sqlite3
-
-# Logs
-logs/
-/**/.log
-
-# Node
+# ------------------------------
+# Frontend (Node / Vite)
+# ------------------------------
 node_modules/
 frontend/node_modules/
+frontend/dist/
+frontend/.vite/
+
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 
-# Vite / frontend build
-frontend/dist/
-dist/
-
+# ------------------------------
 # Environment files
+# ------------------------------
 .env
 .env.*
 *.local
 
-# Editors and IDEs
+# ------------------------------
+# Notebooks / Python tooling
+# ------------------------------
+.ipynb_checkpoints/
+.python-version
+
+# ------------------------------
+# Editors / OS
+# ------------------------------
 .vscode/
 .idea/
-/**/*.suo
-/**/*.ntvs*
-/**/*.njsproj
-/**/*.sln
-/**/*.swp
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.swp
 
-# macOS
 .DS_Store
-
-# Windows
 Thumbs.db
 desktop.ini
 
-# Misc
+# ------------------------------
+# Misc temp files
+# ------------------------------
 *.bak
 *.tmp
 *.cache
-
-# Generated audio (temporary)
-summary.mp3
