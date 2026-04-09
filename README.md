@@ -1,0 +1,1 @@
+Built an AI-powered News & Article Summarizer with support for text-paste input, URL scraping, and keyword-based article search. Implemented multi-language summarization, text-to-speech conversion, and a database system for logging and retrieval of summaries. Utilized Python, NLP libraries, and API integrations.
