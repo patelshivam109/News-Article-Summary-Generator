@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
-import Card from '../components/Card'
+import Card from '../components/ui/Card'
 import ThemeToggle from '../components/ThemeToggle'
+import AppShell from '../components/layout/AppShell'
 
 export default function Settings(){
   const [settings, setSettings] = useState({
@@ -40,15 +41,15 @@ export default function Settings(){
   ]
 
   return (
-    <div className="p-6">
+    <AppShell title="Settings" subtitle="Personalize language, summary preferences and behavior">
       <div className="max-w-2xl">
-        <h3 className="text-2xl font-bold mb-6">⚙️ Settings</h3>
+        <h3 className="mb-6 text-2xl font-bold text-slate-900 dark:text-slate-100">Settings</h3>
 
         {/* Theme Setting */}
         <Card className="mb-4">
           <div className="flex items-center justify-between pb-4 border-b border-slate-700">
             <div>
-              <div className="font-semibold text-slate-900 dark:text-slate-100">🌙 Dark Mode</div>
+              <div className="font-semibold text-slate-900 dark:text-slate-100">Dark Mode</div>
               <div className="text-sm text-slate-400 mt-1">Toggle between dark and light theme</div>
             </div>
             <ThemeToggle />
@@ -58,7 +59,7 @@ export default function Settings(){
         {/* Language Setting */}
         <Card className="mb-4">
           <div>
-            <div className="font-semibold text-slate-900 dark:text-slate-100 mb-3">🌍 Default Language</div>
+            <div className="font-semibold text-slate-900 dark:text-slate-100 mb-3">Default Language</div>
             <div className="text-sm text-slate-400 mb-4">Choose your preferred language for summaries</div>
             <div className="grid grid-cols-2 gap-2">
               {languages.map(lang => (
@@ -68,7 +69,7 @@ export default function Settings(){
                   className={`p-3 rounded-lg text-left transition ${
                     settings.language === lang.code
                       ? 'bg-indigo-600 border border-indigo-400 text-white'
-                      : 'bg-slate-800 border border-slate-700 text-slate-300 hover:border-slate-600'
+                      : 'bg-slate-100 border border-slate-300 text-slate-700 hover:border-slate-400 dark:bg-slate-800 dark:border-slate-700 dark:text-slate-300 dark:hover:border-slate-600'
                   }`}
                 >
                   <div className="font-medium">{lang.name}</div>
@@ -82,7 +83,7 @@ export default function Settings(){
         {/* Summary Length Setting */}
         <Card className="mb-4">
           <div>
-            <div className="font-semibold text-slate-900 dark:text-slate-100 mb-3">📊 Default Summary Length</div>
+            <div className="font-semibold text-slate-900 dark:text-slate-100 mb-3">Default Summary Length</div>
             <div className="text-sm text-slate-400 mb-4">Choose how detailed summaries should be</div>
             <div className="space-y-2">
               {summaryOptions.map(opt => (
@@ -91,7 +92,7 @@ export default function Settings(){
                   className={`flex items-center p-3 rounded-lg cursor-pointer transition ${
                     settings.summaryLength === opt.value
                       ? 'bg-indigo-600/20 border border-indigo-500'
-                      : 'bg-slate-800 border border-slate-700 hover:border-slate-600'
+                      : 'bg-slate-100 border border-slate-300 hover:border-slate-400 dark:bg-slate-800 dark:border-slate-700 dark:hover:border-slate-600'
                   }`}
                 >
                   <input
@@ -116,7 +117,7 @@ export default function Settings(){
         <Card className="mb-4">
           <div className="flex items-center justify-between pb-4 border-b border-slate-700">
             <div>
-              <div className="font-semibold text-slate-900 dark:text-slate-100">💾 Auto-Save Summaries</div>
+              <div className="font-semibold text-slate-900 dark:text-slate-100">Auto-Save Summaries</div>
               <div className="text-sm text-slate-400 mt-1">Automatically save generated summaries</div>
             </div>
             <label className="flex items-center cursor-pointer">
@@ -134,7 +135,7 @@ export default function Settings(){
         <Card className="mb-4">
           <div className="flex items-center justify-between">
             <div>
-              <div className="font-semibold text-slate-900 dark:text-slate-100">🔔 Browser Notifications</div>
+              <div className="font-semibold text-slate-900 dark:text-slate-100">Browser Notifications</div>
               <div className="text-sm text-slate-400 mt-1">Get notifications when summaries are ready</div>
             </div>
             <label className="flex items-center cursor-pointer">
@@ -151,9 +152,9 @@ export default function Settings(){
         {/* Info Section */}
         <Card className="bg-blue-900/20 border border-blue-700/30">
           <div className="flex gap-3">
-            <div className="text-2xl">ℹ️</div>
+            <div className="text-2xl">Info</div>
             <div>
-              <div className="font-semibold text-blue-100">💡 Tip</div>
+              <div className="font-semibold text-blue-100">Tip</div>
               <p className="text-sm text-blue-200 mt-1">
                 Your settings are saved locally in your browser. They persist across sessions and don't affect other users.
               </p>
@@ -164,13 +165,13 @@ export default function Settings(){
         {/* Additional Info */}
         <div className="mt-8 pt-6 border-t border-slate-700">
           <div className="text-sm text-slate-400 space-y-2">
-            <p>📝 <strong>Version:</strong> 1.0.0</p>
-            <p>🔧 <strong>Backend:</strong> Flask API</p>
-            <p>⚛️ <strong>Frontend:</strong> React 18 + Vite</p>
-            <p>🎨 <strong>Styling:</strong> Tailwind CSS</p>
+            <p><strong>Version:</strong> 1.0.0</p>
+            <p><strong>Backend:</strong> Flask API</p>
+            <p><strong>Frontend:</strong> React + Vite</p>
+            <p><strong>Styling:</strong> Tailwind CSS</p>
           </div>
         </div>
       </div>
-    </div>
+    </AppShell>
   )
 }

@@ -1,3 +1,2 @@
-.dark body { background: #0f172a; }
-.light body, body { background: #f8f9fb; }
-.card { box-shadow: 0 4px 18px rgba(3,10,20,0.06); }
+body { background: #f8fafc; }
+.dark body { background: #020617; }

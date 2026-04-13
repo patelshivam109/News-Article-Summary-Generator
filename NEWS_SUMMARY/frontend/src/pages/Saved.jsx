@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import Card from '../components/ui/Card'
-import Sidebar from '../components/layout/Sidebar'
-import Navbar from '../components/layout/Navbar'
+import AppShell from '../components/layout/AppShell'
 
 export default function Saved(){
   const [items, setItems] = useState([])
@@ -52,14 +51,10 @@ export default function Saved(){
   }
 
   return (
-    <div className="min-h-screen flex">
-      <Sidebar />
-      <div className="flex-1 flex flex-col bg-slate-50 text-slate-900 dark:bg-slate-900 dark:text-slate-100">
-        <Navbar />
-        <main className="p-6">
-          <div className="max-w-4xl">
+    <AppShell title="Saved" subtitle="Your persisted summaries from backend or local cache">
+      <div className="max-w-4xl">
             <div className="mb-6">
-              <h3 className="text-2xl font-bold">📚 Saved Summaries</h3>
+              <h3 className="text-2xl font-bold text-slate-900 dark:text-slate-100">Saved Summaries</h3>
               <p className="text-slate-600 dark:text-slate-400 text-sm mt-1">{items.length} summary{items.length !== 1 ? 's' : ''} saved</p>
             </div>
 
@@ -77,7 +72,7 @@ export default function Saved(){
 
             {!loading && items.length === 0 ? (
               <Card className="py-16 text-center">
-                <div className="text-4xl mb-3">🔍</div>
+                <div className="text-4xl mb-3">Archive</div>
                 <p className="text-slate-400">No saved summaries yet</p>
                 <p className="text-slate-500 text-sm mt-1">Generate and save a summary to see it here</p>
               </Card>
@@ -154,9 +149,7 @@ export default function Saved(){
                 ))}
               </div>
             )}
-          </div>
-        </main>
       </div>
-    </div>
+    </AppShell>
   )
 }

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import Card from '../components/Card'
+import Card from '../components/ui/Card'
+import AppShell from '../components/layout/AppShell'
 
 export default function History(){
   const [items, setItems] = useState([])
@@ -38,10 +39,10 @@ export default function History(){
   }
 
   return (
-    <div className="p-6">
+    <AppShell title="History" subtitle="Review all previously generated summaries">
       <div className="mb-6">
-        <h3 className="text-2xl font-bold">⏰ History</h3>
-        <p className="text-slate-400 text-sm mt-1">{sorted.length} of {items.length} summary{items.length !== 1 ? 's' : ''}</p>
+        <h3 className="text-2xl font-bold text-slate-900 dark:text-slate-100">History</h3>
+        <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">{sorted.length} of {items.length} summary{items.length !== 1 ? 's' : ''}</p>
       </div>
 
       {items.length > 0 && (
@@ -80,10 +81,10 @@ export default function History(){
         <Card>
           <div className="py-12 text-center">
             <div className="text-4xl mb-3">🔍</div>
-            <p className="text-slate-400">
+                <p className="text-slate-500 dark:text-slate-400">
               {items.length === 0 ? 'No history yet' : 'No summaries match your filters'}
             </p>
-            <p className="text-slate-500 text-sm mt-1">Summaries you generate will appear here</p>
+                <p className="mt-1 text-sm text-slate-500">Summaries you generate will appear here</p>
           </div>
         </Card>
       ) : (
@@ -93,23 +94,23 @@ export default function History(){
               <div className="flex items-start justify-between">
                 <div className="flex-1">
                   <div className="flex items-center gap-2 mb-2 flex-wrap">
-                    <span className="text-xs font-mono text-slate-400">#{sorted.length - idx}</span>
-                    <span className="text-xs px-2 py-1 bg-blue-900/40 rounded text-blue-300">
+                    <span className="text-xs font-mono text-slate-500 dark:text-slate-400">#{sorted.length - idx}</span>
+                    <span className="rounded bg-blue-100 px-2 py-1 text-xs text-blue-700 dark:bg-blue-900/40 dark:text-blue-300">
                       {getInputType(it)}
                     </span>
-                    <span className="text-xs px-2 py-1 bg-indigo-900/40 rounded text-indigo-300">
+                    <span className="rounded bg-brand-100 px-2 py-1 text-xs text-brand-700 dark:bg-brand-900/40 dark:text-brand-300">
                       {it.language?.toUpperCase() || 'EN'}
                     </span>
-                    <span className="text-xs text-slate-400 ml-auto">
+                    <span className="ml-auto text-xs text-slate-500 dark:text-slate-400">
                       {new Date(it.date).toLocaleDateString()} {new Date(it.date).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                     </span>
                   </div>
                   
                   <div className="font-semibold text-slate-900 dark:text-slate-100 mb-2">{it.title}</div>
                   
-                  <p className="text-slate-400 text-sm line-clamp-2">{it.summary}</p>
+                  <p className="line-clamp-2 text-sm text-slate-600 dark:text-slate-400">{it.summary}</p>
 
-                  <div className="mt-2 flex items-center gap-3 text-xs text-slate-500">
+                  <div className="mt-2 flex items-center gap-3 text-xs text-slate-500 dark:text-slate-400">
                     <span>📊 {it.summary.split(' ').length} words</span>
                     {it.url && <span>🔗 {new URL(it.url).hostname}</span>}
                   </div>
@@ -133,6 +134,6 @@ export default function History(){
           ))}
         </div>
       )}
-    </div>
+    </AppShell>
   )
 }

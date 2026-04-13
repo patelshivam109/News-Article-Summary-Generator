@@ -1,9 +1,7 @@
 import React, { useState } from 'react'
-import Sidebar from '../components/layout/Sidebar'
-import Navbar from '../components/layout/Navbar'
+import AppShell from '../components/layout/AppShell'
 import Card from '../components/ui/Card'
 import Button from '../components/ui/Button'
-import Input from '../components/ui/Input'
 import InputPanel from '../components/summary/InputPanel'
 import SummaryCard from '../components/summary/SummaryCard'
 import { motion } from 'framer-motion'
@@ -52,12 +50,8 @@ export default function Dashboard(){
   }
 
   return (
-    <div className="min-h-screen flex">
-      <Sidebar />
-      <div className="flex-1 flex flex-col bg-slate-50 text-slate-900 dark:bg-slate-900 dark:text-slate-100">
-        <Navbar />
-        <main className="p-6">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+    <AppShell title="Dashboard" subtitle="Generate concise article intelligence in one place">
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
             <div className="lg:col-span-2">
               <InputPanel onGenerate={async ({ input: value, mode, language, length })=>{
                 setLoading(true)
@@ -119,8 +113,8 @@ export default function Dashboard(){
                 {loading && <Skeleton />}
                 
                 {!loading && !result && !error && (
-                  <Card className="py-16 text-center text-slate-400">
-                    <div className="text-4xl mb-3">📝</div>
+                  <Card className="py-16 text-center text-slate-500 dark:text-slate-400">
+                    <div className="mb-3 text-4xl">Summary</div>
                     Generate a summary to see results here
                   </Card>
                 )}
@@ -136,12 +130,12 @@ export default function Dashboard(){
                 )}
 
                 {!loading && error && (
-                  <Card className="border-l-4 border-red-500 bg-red-500/5">
+                  <Card className="border-l-4 border-red-500 bg-red-50 dark:bg-red-500/10">
                     <div className="flex items-start gap-3">
-                      <span className="text-2xl">⚠️</span>
+                      <span className="text-2xl">!</span>
                       <div>
-                        <h5 className="font-semibold text-red-400">Error</h5>
-                        <p className="text-sm text-red-300 mt-1">{error}</p>
+                        <h5 className="font-semibold text-red-700 dark:text-red-300">Error</h5>
+                        <p className="mt-1 text-sm text-red-700/90 dark:text-red-200">{error}</p>
                       </div>
                     </div>
                   </Card>
@@ -149,11 +143,9 @@ export default function Dashboard(){
               </motion.div>
             </div>
 
-            {/* Sidebar Panel */}
             <div>
-              {/* Quick Actions */}
               <Card>
-                <h5 className="font-semibold mb-4 text-slate-100">⚡ Quick Actions</h5>
+                <h5 className="mb-4 font-semibold text-slate-900 dark:text-slate-100">Quick Actions</h5>
                 <div className="flex flex-col gap-2">
                   <Button 
                     className="w-full text-sm" 
@@ -181,43 +173,38 @@ export default function Dashboard(){
                     }}
                     disabled={!result || result.error}
                   >
-                    🖨️ Print
+                    Print
                   </Button>
                 </div>
               </Card>
 
-              {/* Tips */}
               <Card className="mt-4">
-                <h6 className="text-sm font-semibold text-slate-200 mb-3">💡 Tips</h6>
-                <ul className="text-xs space-y-2 text-slate-400">
-                  <li>✓ Paste full URLs for best results</li>
-                  <li>✓ Use text mode for pasted content</li>
-                  <li>✓ News mode searches current news</li>
-                  <li>✓ Select your preferred language</li>
-                  <li>✓ Use 🔊 button to listen</li>
+                <h6 className="mb-3 text-sm font-semibold text-slate-900 dark:text-slate-100">Editorial Tips</h6>
+                <ul className="space-y-2 text-xs text-slate-600 dark:text-slate-400">
+                  <li>Use URL mode for long-form reporting.</li>
+                  <li>Text mode is best for copied content and notes.</li>
+                  <li>Short length gives headline-level briefs.</li>
+                  <li>Long length is useful for research snapshots.</li>
                 </ul>
               </Card>
 
-              {/* Stats */}
               {result && !result.error && (
-                <Card className="mt-4 bg-slate-800/50">
-                  <h6 className="text-sm font-semibold text-slate-200 mb-3">📊 Stats</h6>
+                <Card className="mt-4">
+                  <h6 className="mb-3 text-sm font-semibold text-slate-900 dark:text-slate-100">Summary Stats</h6>
                   <div className="space-y-2 text-xs">
                     <div className="flex justify-between">
-                      <span className="text-slate-400">Original:</span>
-                      <span className="text-indigo-400 font-medium">{(result.url || 'Custom').length > 20 ? (result.url || 'Custom').slice(0, 20) + '...' : result.url || 'Text'}</span>
+                      <span className="text-slate-500 dark:text-slate-400">Source:</span>
+                      <span className="font-medium text-brand-700 dark:text-brand-300">{(result.url || 'Custom').length > 20 ? (result.url || 'Custom').slice(0, 20) + '...' : result.url || 'Text'}</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-slate-400">Summary length:</span>
-                      <span className="text-indigo-400 font-medium">{(result.summary || '').split(' ').length} words</span>
+                      <span className="text-slate-500 dark:text-slate-400">Summary length:</span>
+                      <span className="font-medium text-brand-700 dark:text-brand-300">{(result.summary || '').split(' ').length} words</span>
                     </div>
                   </div>
                 </Card>
               )}
             </div>
-          </div>
-        </main>
       </div>
-    </div>
+    </AppShell>
   )
 }

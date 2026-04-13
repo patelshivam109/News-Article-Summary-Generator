@@ -59,24 +59,24 @@ export default function SummaryCard({ title, summary, points = [], sentiment = '
     <Card>
       <div className="flex items-start justify-between mb-4">
         <div className="flex-1">
-          <h4 className="font-semibold text-lg text-slate-100">{title}</h4>
+          <h4 className="text-lg font-semibold text-slate-900 dark:text-slate-100">{title}</h4>
           <div className="flex items-center gap-2 mt-2">
-            <span className="px-3 py-1 rounded-full bg-slate-800 text-slate-200 text-sm">{sentiment}</span>
-            <span className="px-3 py-1 rounded-full bg-indigo-900/40 text-indigo-300 text-sm">{language.toUpperCase()}</span>
+            <span className="rounded-full bg-slate-100 px-3 py-1 text-sm text-slate-700 dark:bg-slate-800 dark:text-slate-200">{sentiment}</span>
+            <span className="rounded-full bg-brand-100 px-3 py-1 text-sm text-brand-700 dark:bg-brand-900/40 dark:text-brand-300">{language.toUpperCase()}</span>
           </div>
         </div>
       </div>
 
-      <p className="mt-4 text-slate-300 leading-relaxed text-base">{summary}</p>
+      <p className="mt-4 text-base leading-relaxed text-slate-700 dark:text-slate-300">{summary}</p>
 
       {/* Key Points */}
       {points && points.length > 0 && (
         <div className="mt-5">
-          <h5 className="text-sm font-semibold text-slate-200 mb-2">📌 Key Points:</h5>
+          <h5 className="mb-2 text-sm font-semibold text-slate-900 dark:text-slate-100">Key Points</h5>
           <ul className="space-y-2">
             {points.map((p, i) => (
-              <li key={i} className="flex items-start gap-2 text-slate-300 text-sm">
-                <span className="text-indigo-400 mt-1">•</span>
+              <li key={i} className="flex items-start gap-2 text-sm text-slate-700 dark:text-slate-300">
+                <span className="mt-1 text-brand-500">•</span>
                 <span>{p}</span>
               </li>
             ))}
@@ -91,10 +91,10 @@ export default function SummaryCard({ title, summary, points = [], sentiment = '
           className={`flex items-center gap-2 px-4 py-2 rounded-lg transition text-sm font-medium ${
             isSpeaking
               ? 'bg-red-600 text-white'
-              : 'bg-indigo-600 hover:bg-indigo-700 text-white'
+              : 'bg-brand-600 hover:bg-brand-700 text-white'
           }`}
         >
-          {isSpeaking ? '⏸ Stop' : '🔊 Listen'}
+          {isSpeaking ? 'Stop' : 'Listen'}
         </button>
         
         <button
@@ -102,14 +102,14 @@ export default function SummaryCard({ title, summary, points = [], sentiment = '
           className={`flex items-center gap-2 px-4 py-2 rounded-lg transition text-sm font-medium ${
             copied
               ? 'bg-green-600 text-white'
-              : 'bg-slate-700 hover:bg-slate-600 text-slate-100'
+              : 'bg-slate-200 hover:bg-slate-300 text-slate-800 dark:bg-slate-700 dark:hover:bg-slate-600 dark:text-slate-100'
           }`}
         >
-          {copied ? '✓ Copied!' : '📋 Copy'}
+          {copied ? 'Copied' : 'Copy'}
         </button>
 
-        <button className="flex items-center gap-2 px-4 py-2 rounded-lg bg-slate-700 hover:bg-slate-600 text-slate-100 transition text-sm font-medium">
-          📥 Share
+        <button className="flex items-center gap-2 rounded-lg bg-slate-200 px-4 py-2 text-sm font-medium text-slate-800 transition hover:bg-slate-300 dark:bg-slate-700 dark:text-slate-100 dark:hover:bg-slate-600">
+          Share
         </button>
       </div>
     </Card>
