@@ -17,7 +17,7 @@ export default function Saved(){
     setLoading(true)
     setError('')
     try {
-      const res = await axios.get('http://localhost:5000/api/saved?page=1&limit=100')
+      const res = await axios.get('/api/saved?page=1&limit=100')
       setItems(res.data.summaries || [])
     } catch (e) {
       // Fallback keeps app usable even if backend is down.
@@ -32,7 +32,7 @@ export default function Saved(){
   const deleteSummary = async (id) => {
     if (!window.confirm('Delete this summary?')) return
     try {
-      await axios.delete(`http://localhost:5000/api/saved/${id}`)
+      await axios.delete(`/api/saved/${id}`)
       setItems(items.filter(item => item.id !== id))
     } catch (e) {
       const updated = items.filter(item => item.id !== id)

@@ -33,7 +33,7 @@ export default function Dashboard(){
       language: selectedLanguage
     }
     try {
-      await axios.post('http://localhost:5000/api/saved', {
+      await axios.post('/api/saved', {
         title: item.title,
         summary: item.summary,
         url: item.url,
@@ -60,7 +60,7 @@ export default function Dashboard(){
                 setSelectedLanguage(language)
                 try{
                   if(mode === 'url'){
-                    const res = await axios.post('http://localhost:5000/api/url', { 
+                    const res = await axios.post('/api/url', { 
                       url: value, 
                       language, 
                       sentence_count: length==='short'?2: length==='long'?8:5 
@@ -73,7 +73,7 @@ export default function Dashboard(){
                       setError('')
                     }
                   } else if(mode === 'text'){
-                    const res = await axios.post('http://localhost:5000/api/summarize', { 
+                    const res = await axios.post('/api/summarize', { 
                       text: value, 
                       language, 
                       sentence_count: length==='short'?2: length==='long'?8:5 
@@ -86,17 +86,25 @@ export default function Dashboard(){
                       setError('')
                     }
                   } else if(mode === 'news'){
-                    const res = await axios.post('http://localhost:5000/api/news', { 
+                    const res = await axios.post('/api/news', { 
                       keyword: value, 
                       language, 
                       sentence_count: length==='short'?2: length==='long'?8:5 
                     })
-                    // show first article's summary as example
-                    if(res.data.articles && res.data.articles.length>0){
-                      setResult(res.data.articles[0])
+                    const articles = Array.isArray(res.data?.articles) ? res.data.articles : []
+
+                    if(articles.length > 0){
+                      const first = articles[0]
+                      setResult({
+                        title: first.title || 'News Summary',
+                        summary: first.summary || first.description || 'No summary available for this article.',
+                        url: first.url || null,
+                        key_points: first.key_points || [],
+                        sentiment: first.sentiment || 'Neutral',
+                      })
                       setError('')
                     } else {
-                      setError('No articles found. Try a different keyword.')
+                      setError('No articles found for this keyword. Try a broader topic.')
                       setResult(null)
                     }
                   }
